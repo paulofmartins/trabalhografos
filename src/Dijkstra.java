@@ -38,7 +38,12 @@ public class Dijkstra {
 	// array com as distancias da linha do algoritmo
 	public void atualizaDistancias(int v){
 		for(int j = 0; j < grafo.getMatrizValorada().length; j++){
-			distancias.add(grafo.getMatrizValorada()[v][j]);	
+//			if(v < j){ // pegar somente a diagonal triangular superior
+				distancias.add(grafo.getMatrizValorada()[v][j]);	
+//			}
+//			else if(v > j){
+//				distancias.add(grafo.getMatrizValorada()[v][j]);
+//			}
 		}
 	}
 
@@ -53,42 +58,20 @@ public class Dijkstra {
         }
         
         System.out.println("---- Dentro do pegaVertice -----");
-
-        indice = pegaVertice(v, menor);
-		if(this.usados.indexOf(indice) != -1){
-			// se já tiver usado o vertice indice
-			menor = pegaOutroElemento(menor);
-			indice = pegaVertice(v, menor);
-		}
-
-        custoDoMenorCaminho += menor;
-		
         System.out.println("V = " + v);
         System.out.println("menor distancia = " + menor);
-        System.out.println("indice = " + indice);
-    	
-    	System.out.println("---- Dentro do pegaVertice -----");
-        return indice;
-	}
-	
-	public int pegaVertice(int v, int menor){
-    	int indice = 0;
-		for(int j = 0; j < grafo.getNum_vertices(); j++){
+        
+        custoDoMenorCaminho += menor;
+        // localiza o a coluna do menor elemento
+    	for(int j = 0; j < grafo.getNum_vertices(); j++){
 			if(this.grafo.getMatrizValorada()[v][j] == menor){
 				indice = j;
 			}
     	}
-		return indice;
-	}
-	
-	public int pegaOutroElemento(int valor){
-		int menor = 99999;
-        for (int i = 0; i < distancias.size(); i++) {  
-        	if(distancias.get(i) > valor &&  distancias.get(i) < menor && distancias.get(i) != 0){  
-        		menor =  distancias.get(i);
-            }  
-        }
-		return menor;
+        System.out.println("indice = " + indice);
+    	
+    	System.out.println("---- Dentro do pegaVertice -----");
+        return indice;
 	}
 	
 	public void algoritmo(int v){
@@ -124,7 +107,7 @@ public class Dijkstra {
 		while(!this.naoUsados.isEmpty()){
 			v = pegaVerticeMenorValor(v);
 			if(this.usados.indexOf(v) != -1){ // verifica se o v já foi usado
-				break; // se encontrou break
+				break;
 			}
 			System.out.println("dentro do laço v=" +v);
 			this.distancias.clear();
